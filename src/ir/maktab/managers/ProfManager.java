@@ -15,6 +15,8 @@ public class ProfManager extends Manager{
         TABLE_NAME = "prof";
     }
 
+    public static void choose(){}
+
     public static void add(Prof p) {
 
         init();

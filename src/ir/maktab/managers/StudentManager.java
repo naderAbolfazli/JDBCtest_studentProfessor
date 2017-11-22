@@ -16,6 +16,8 @@ public class StudentManager extends Manager{
         TABLE_NAME = "students";
     }
 
+    public static void choose(){}
+
     public static void add(Student s) {
         init();
         try {

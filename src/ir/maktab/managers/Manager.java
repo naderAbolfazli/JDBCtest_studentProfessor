@@ -1,12 +1,6 @@
 package ir.maktab.managers;
 
-import ir.maktab.models.Prof;
-import ir.maktab.models.Student;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by nader on 11/19/2017.
@@ -96,7 +90,7 @@ public class Manager {
     public static int searchByName(String name){
         init();
         try {
-            String sql = "select * from "+TABLE_NAME+" where name ='"+name+"'";
+            String sql = "select * from "+ TABLE_NAME +" where name ='"+name+"'";
             ResultSet rs = stmt.executeQuery(sql);
 
             if (rs.next()) {

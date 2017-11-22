@@ -31,6 +31,7 @@ public class CLI {
         String profName = getInput();
         print("Address:");
         String profAddress = getInput();
+        ProfManager.choose();
         int exist =ProfManager.searchByName(profName);
         if (exist==0) {
             Prof professor = new Prof(profName, profAddress);
@@ -48,6 +49,7 @@ public class CLI {
         String studentDept = getInput();
         print("SupervisorID:");
         int studentId = in.nextInt();
+        StudentManager.choose();
         int exist =StudentManager.searchByName(studentName);
         if (exist==0) {
             Student s = new Student(studentName, studentDept, studentId);
@@ -60,24 +62,28 @@ public class CLI {
     static void deleteProf() {
         print("id:");
         int id = in.nextInt();
+        ProfManager.choose();
         ProfManager.delete(id);
     }
 
     static void deleteStudent() {
         print("id:");
         int stId = in.nextInt();
+        StudentManager.choose();
         StudentManager.delete(stId);
     }
 
     static void deleteStudentByName() {
         print("name:");
         String stName = getInput();
+        StudentManager.choose();
         StudentManager.delete(stName);
     }
 
     static void showStudentSupervisor() {
         print("student name:");
         String name = getInput();
+        StudentManager.choose();
         print(StudentManager.showSupervisor(StudentManager.searchByName(name)).getName());
     }
 
