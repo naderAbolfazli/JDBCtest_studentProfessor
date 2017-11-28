@@ -39,7 +39,7 @@ public class Manager {
         }
     }
 
-    static void finalize(ResultSet rs, Statement stmt, Connection con) {
+    static void finalize(ResultSet rs, Statement stmt, Connection conn) {
         try {
             rs.close();
             stmt.close();

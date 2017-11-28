@@ -1,4 +1,4 @@
-package ir.maktab;
+package ir.maktab.UserInterFace;
 
 import ir.maktab.managers.ProfManager;
 import ir.maktab.managers.StudentManager;
