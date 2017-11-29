@@ -4,7 +4,11 @@
 
 package ir.maktab.UserInterFace;
 
+import ir.maktab.managers.StudentManager;
+import ir.maktab.models.Student;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 /**
@@ -14,6 +18,29 @@ public class StudentGUI extends JFrame {
     public StudentGUI() {
         initComponents();
         setVisible(true);
+    }
+
+    private void ButtonActionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()){
+            case "getAll":
+                table1.setModel(StudentManager.getAllAsModel());
+                break;
+            case "load":
+
+                break;
+            case "delete":
+                StudentManager.delete(Integer.parseInt(id.getText()));
+                break;
+            case "edit":
+
+                break;
+            case "add":
+                Student s = new Student(name.getText(),dept.getText(),Integer.parseInt(profId.getText()));
+                StudentManager.add(s);
+
+                break;
+        }
+
     }
 
     private void initComponents() {
@@ -26,10 +53,12 @@ public class StudentGUI extends JFrame {
         delete = new JButton();
         edit = new JButton();
         id = new JTextField();
+        id.setToolTipText("Id");
         name = new JTextField();
+        name.setToolTipText("Name");
         dept = new JTextField();
         profId = new JTextField();
-        button4 = new JButton();
+        addButton = new JButton();
 
         //======== this ========
         setTitle("Student Menu");
@@ -39,29 +68,48 @@ public class StudentGUI extends JFrame {
         //======== scrollPane1 ========
         {
             scrollPane1.setViewportView(table1);
+            table1.setModel(StudentManager.getAllAsModel());
+
+            ListSelectionModel select= table1.getSelectionModel();
+            select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            select.addListSelectionListener(e -> {
+                id.setText(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 0)));
+                name.setText(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 1)));
+                dept.setText(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 2)));
+                profId.setText(String.valueOf(table1.getValueAt(table1.getSelectedRow(), 3)));
+            });
         }
         contentPane.add(scrollPane1);
         scrollPane1.setBounds(20, 20, 300, 195);
 
         //---- getAll ----
         getAll.setText("get All");
+        getAll.setActionCommand("getAll");
+        getAll.addActionListener(e -> ButtonActionPerformed(e));
         contentPane.add(getAll);
         getAll.setBounds(20, 225, 65, getAll.getPreferredSize().height);
 
         //---- load ----
         load.setText("Load");
+        load.setActionCommand("load");
+        load.addActionListener(e -> ButtonActionPerformed(e));
         contentPane.add(load);
         load.setBounds(85, 225, 65, load.getPreferredSize().height);
 
         //---- delete ----
         delete.setText("Delete");
+        delete.setActionCommand("delete");
+        delete.addActionListener(e -> ButtonActionPerformed(e));
         contentPane.add(delete);
         delete.setBounds(150, 225, 65, delete.getPreferredSize().height);
 
         //---- edit ----
         edit.setText("Edit");
+        edit.setActionCommand("edit");
+        edit.addActionListener(e -> ButtonActionPerformed(e));
         contentPane.add(edit);
         edit.setBounds(215, 225, 65, edit.getPreferredSize().height);
+
         contentPane.add(id);
         id.setBounds(330, 40, 55, id.getPreferredSize().height);
         contentPane.add(name);
@@ -71,10 +119,12 @@ public class StudentGUI extends JFrame {
         contentPane.add(profId);
         profId.setBounds(330, 160, 55, profId.getPreferredSize().height);
 
-        //---- button4 ----
-        button4.setText("Add");
-        contentPane.add(button4);
-        button4.setBounds(335, 215, button4.getPreferredSize().width, 42);
+        //---- addButton ----
+        addButton.setText("Add");
+        addButton.setActionCommand("add");
+        addButton.addActionListener(e -> ButtonActionPerformed(e));
+        contentPane.add(addButton);
+        addButton.setBounds(335, 215, addButton.getPreferredSize().width, 42);
 
         contentPane.setPreferredSize(new Dimension(400, 300));
         pack();
@@ -94,6 +144,6 @@ public class StudentGUI extends JFrame {
     private JTextField name;
     private JTextField dept;
     private JTextField profId;
-    private JButton button4;
+    private JButton addButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

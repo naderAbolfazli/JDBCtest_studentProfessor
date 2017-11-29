@@ -41,10 +41,6 @@ public class MainGUI extends JFrame {
 
     }
 
-    private void studentButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
-    }
-
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - nader abolfazli
@@ -53,21 +49,25 @@ public class MainGUI extends JFrame {
 
         //======== this ========
         setTitle("Main Menu");
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Container contentPane = getContentPane();
         contentPane.setLayout(null);
 
         //---- studentButton ----
         studentButton.setText("Students");
-        studentButton.addActionListener(e -> studentButtonActionPerformed(e));
+        studentButton.setActionCommand("student");
+        studentButton.addActionListener(e -> ButtonActionPerformed(e));
         contentPane.add(studentButton);
-        studentButton.setBounds(35, 20, 85, studentButton.getPreferredSize().height);
+        studentButton.setBounds(25, 20, 100, studentButton.getPreferredSize().height);
 
         //---- profButton ----
         profButton.setText("Professors");
+        profButton.setActionCommand("prof");
+        profButton.addActionListener(e -> ButtonActionPerformed(e));
         contentPane.add(profButton);
-        profButton.setBounds(new Rectangle(new Point(135, 20), profButton.getPreferredSize()));
+        profButton.setBounds(145, 20, 100, profButton.getPreferredSize().height);
 
-        contentPane.setPreferredSize(new Dimension(255, 100));
+        contentPane.setPreferredSize(new Dimension(270, 40+profButton.getPreferredSize().height));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents

@@ -19,6 +19,7 @@ public class Manager {
 
     static Connection conn = null;
     static Statement stmt = null;
+    static ResultSet rs;
 
     static void init() {
         //STEP 2: Register JDBC driver

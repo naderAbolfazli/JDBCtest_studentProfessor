@@ -80,7 +80,7 @@ new FormModel {
 				"width": 55
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "button4"
+				name: "addButton"
 				"text": "Add"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 335
