@@ -33,7 +33,6 @@ public class MainGUI extends JFrame {
     }
 
     private void ButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
         if (e.getActionCommand().equals("student"))
             new StudentGUI();
         else if (e.getActionCommand().equals("prof"))
