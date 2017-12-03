@@ -16,7 +16,7 @@ public interface StudentDAO {
 
     boolean edit(Student s) throws SQLException;
 
-    List<Student> getAll();
+    List<Student> getAll() throws SQLException;
 
     DefaultTableModel getAllAsModel() throws SQLException;
 

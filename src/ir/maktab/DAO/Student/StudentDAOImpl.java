@@ -47,34 +47,27 @@ public class StudentDAOImpl extends Manager implements StudentDAO {
         return add(s);
     }
 
-    public List<Student> getAll() {
+    public List<Student> getAll() throws SQLException {
+
         init();
-        try {
-            String sql;
-            sql = "select * from " + TABLE_NAME;
-            //System.out.print(sql);
-            rs = stmt.executeQuery(sql);
+        String sql;
+        sql = "select * from " + TABLE_NAME;
+        //System.out.print(sql);
+        rs = stmt.executeQuery(sql);
 
-            //STEP 5: Extract data from result set
-            List<Student> students = new ArrayList<>();
-            while (rs.next()) {
-                //Retrieve by column name
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String dept = rs.getString("dept");
-                int sid = rs.getInt("supervisor_id");
+        //STEP 5: Extract data from result set
+        List<Student> students = new ArrayList<>();
+        while (rs.next()) {
+            //Retrieve by column name
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String dept = rs.getString("dept");
+            int sid = rs.getInt("supervisor_id");
 
-                students.add(new Student(id, name, dept, sid));
-            }
-
-            return students;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            finalize(rs, stmt, conn);
+            students.add(new Student(id, name, dept, sid));
         }
-        return null;
+        finalize(rs, stmt, conn);
+        return students;
     }
 
     public DefaultTableModel getAllAsModel() throws SQLException {

@@ -16,7 +16,7 @@ public interface ProfDAO {
 
     boolean edit(Prof p) throws SQLException;
 
-    List<Prof> getAll();
+    List<Prof> getAll() throws SQLException;
 
     DefaultTableModel getAllAsModel() throws SQLException;
 

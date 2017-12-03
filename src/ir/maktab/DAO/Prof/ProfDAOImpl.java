@@ -42,33 +42,26 @@ public class ProfDAOImpl extends Manager implements ProfDAO {
         return add(p);
     }
 
-    public List<Prof> getAll() {
+    public List<Prof> getAll() throws SQLException {
 
         init();
-        try {
-            String sql;
-            sql = "select * from " + TABLE_NAME;
-            ResultSet rs = stmt.executeQuery(sql);
+        String sql;
+        sql = "select * from " + TABLE_NAME;
+        ResultSet rs = stmt.executeQuery(sql);
 
-            //STEP 5: Extract data from result set
-            List<Prof> professors = new ArrayList<>();
-            while (rs.next()) {
-                //Retrieve by column name
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String address = rs.getString("address");
+        //STEP 5: Extract data from result set
+        List<Prof> professors = new ArrayList<>();
+        while (rs.next()) {
+            //Retrieve by column name
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String address = rs.getString("address");
 
-                professors.add(new Prof(id, name, address));
-            }
-            //STEP 6: Clean-up environment
-            finalize(rs, stmt, conn);
-
-            return professors;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            professors.add(new Prof(id, name, address));
         }
-        return null;
+        //STEP 6: Clean-up environment
+        finalize(rs, stmt, conn);
+        return professors;
     }
 
     @Override
