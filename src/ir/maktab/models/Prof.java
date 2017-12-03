@@ -4,7 +4,7 @@ package ir.maktab.models;
  * Created by nader on 11/18/2017.
  */
 public class Prof {
-    int id;
+    Integer id;
     String name;
     String address;
 
@@ -13,12 +13,12 @@ public class Prof {
         this.address= address;
     }
 
-    public Prof(int id, String name, String address){
+    public Prof(Integer id, String name, String address){
         this.id = id;
         this.name= name;
         this.address= address;
     }
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

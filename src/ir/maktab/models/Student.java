@@ -21,6 +21,10 @@ public class Student {
         this.supervisor_id =sid;
     }
 
+    public Student(int id) {
+        this.id =id;
+    }
+
     public Integer getId() {
         return id;
     }

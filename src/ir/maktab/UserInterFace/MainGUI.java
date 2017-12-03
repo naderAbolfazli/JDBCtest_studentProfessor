@@ -18,26 +18,15 @@ public class MainGUI extends JFrame {
         setVisible(true);
     }
 
-    public static void computePrefSize(Container contentPane){ // compute preferred size
-        Dimension preferredSize = new Dimension();
-        for(int i = 0; i < contentPane.getComponentCount(); i++) {
-            Rectangle bounds = contentPane.getComponent(i).getBounds();
-            preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-            preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-        }
-        Insets insets = contentPane.getInsets();
-        preferredSize.width += insets.right;
-        preferredSize.height += insets.bottom;
-        contentPane.setMinimumSize(preferredSize);
-        contentPane.setPreferredSize(preferredSize);
-    }
-
     private void ButtonActionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("student"))
+        if (e.getActionCommand().equals("student")) {
             new StudentGUI();
-        else if (e.getActionCommand().equals("prof"))
+            dispose();
+        }
+        else if (e.getActionCommand().equals("prof")) {
             new ProfGUI();
-
+            dispose();
+        }
     }
 
     private void initComponents() {

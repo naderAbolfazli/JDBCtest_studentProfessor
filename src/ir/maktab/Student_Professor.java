@@ -8,6 +8,6 @@ public class Student_Professor {
     public static void main(String[] args) {
 
         new MainGUI();
-        CLI.mainMenu();
+        new CLI().mainMenu();
     }
 }

@@ -4,11 +4,15 @@
 
 package ir.maktab.UserInterFace;
 
-import ir.maktab.managers.StudentManager;
+import ir.maktab.DAO.Student.StudentDAO;
+import ir.maktab.DAO.Student.StudentDAOImpl;
 import ir.maktab.models.Student;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
@@ -17,52 +21,90 @@ import javax.swing.table.DefaultTableModel;
  * @author nader abolfazli
  */
 public class StudentGUI extends JFrame {
+    private StudentDAO studentDAO = new StudentDAOImpl();
 
     public StudentGUI() {
-        initComponents();
-        setVisible(true);
+        try {
+            initComponents();
+            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    new MainGUI();
+                    super.windowClosed(e);
+                }
+            });
+            setVisible(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void ButtonActionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "getAll":
-                table.setModel(StudentManager.getAllAsModel());
-                break;
-            case "load":
 
-                break;
-            case "delete":
-                if (!id.getText().isEmpty()) {
-                    if (JOptionPane.showConfirmDialog(this, "Are you sure?") == JOptionPane.OK_OPTION) {
-                        StudentManager.delete(Integer.parseInt(id.getText()));
-                        table.setModel(StudentManager.getAllAsModel());
-                    }
-                } else
-                    JOptionPane.showMessageDialog(this, "Id not determined or Exist!");
-                break;
-            case "edit":
-                if (!id.getText().isEmpty()) {
-                    //TODO//StudentManager.edit(Integer.parseInt(id.getText()));
-                    table.setModel(StudentManager.getAllAsModel());
+        try {
+            switch (e.getActionCommand()) {
+                case "getAll":
+                    table.setModel(studentDAO.getAllAsModel());
+                    break;
+                case "load":
+                    if(!id.getText().isEmpty())
+                        if(studentDAO.exist(new Student(Integer.parseInt(id.getText())))) {
+                            table.setModel(studentDAO.getAsModel(new Student(Integer.parseInt(id.getText()))));
+                        }else
+                            JOptionPane.showMessageDialog(this, "Not Found!");
+                    else
+                        JOptionPane.showMessageDialog(this, "Empty Field!");
 
-                } else
-                    JOptionPane.showMessageDialog(this, "Id not determined or Exist!");
-                break;
-            case "add":
-                Student s = new Student(Integer.parseInt(id.getText()), name.getText(), dept.getText(), Integer.parseInt(profId.getText()));
-                StudentManager.add(s);
-                table.setModel(StudentManager.getAllAsModel());
-                break;
+                    break;
+                case "delete":
+                    if (!id.getText().isEmpty()) {
+                        if (JOptionPane.showConfirmDialog(this, "Are you sure?") == JOptionPane.OK_OPTION) {
+                            if (!studentDAO.delete(Integer.parseInt(id.getText())))
+                                JOptionPane.showMessageDialog(this, "Not Found!");
+                            table.setModel(studentDAO.getAllAsModel());
+                        }
+                    } else
+                        JOptionPane.showMessageDialog(this, "Empty Field!");
+                    break;
+                case "edit":
+                    if (checkField()>=0) {
+                        Student s = new Student(Integer.parseInt(id.getText()));
+                        if(!studentDAO.edit(s))
+                            JOptionPane.showMessageDialog(this, "Not Found!");
+                        table.setModel(studentDAO.getAllAsModel());
+
+                    } else
+                        JOptionPane.showMessageDialog(this, "Empty Fields!");
+                    break;
+                case "add":
+                    Student s = null;
+                    if (checkField()==1)
+                        s = new Student(Integer.parseInt(id.getText()), name.getText()
+                                , dept.getText(), Integer.parseInt(profId.getText()));
+                    else if(checkField()==0)
+                        s= new Student(name.getText(), dept.getText(), Integer.parseInt(profId.getText()));
+
+                    if(s==null)
+                        JOptionPane.showMessageDialog(this, "Empty Fields!");
+                    else
+                        if(!studentDAO.add(s))
+                            JOptionPane.showMessageDialog(this, "Already Exist");
+                    table.setModel(studentDAO.getAllAsModel());
+                    break;
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
         }
-
     }
 
-    private void removeModelRow(int id) {
-        for (int i = model.getRowCount() - 1; i >= 0; i--)
-            if (model.getValueAt(i, 0).equals(id)) {
-                model.removeRow(i);
-                break;
-            }
+    private int checkField() {
+        if (!id.getText().isEmpty() && !name.getText().isEmpty() && !profId.getText().isEmpty())
+            return 1;
+        else if (!name.getText().isEmpty() && !profId.getText().isEmpty())
+            return 0;
+        else
+            return -1;
     }
 
     public void selectionChanged(ListSelectionEvent e) {
@@ -75,7 +117,7 @@ public class StudentGUI extends JFrame {
         }
     }
 
-    private void initComponents() {
+    private void initComponents() throws SQLException {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - nader abolfazli
         scrollPane1 = new JScrollPane();
@@ -97,7 +139,7 @@ public class StudentGUI extends JFrame {
 
         //======== scrollPane1 ========
         {
-            model = StudentManager.getAllAsModel();
+            model = studentDAO.getAllAsModel();
             scrollPane1.setViewportView(table);
             table.setModel(model);
 
