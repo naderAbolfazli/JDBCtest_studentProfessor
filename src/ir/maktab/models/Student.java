@@ -4,10 +4,10 @@ package ir.maktab.models;
  * Created by nader on 11/18/2017.
  */
 public class Student {
-    Integer id;
-    String name;
-    String dept;
-    int supervisor_id;
+    private Integer id;
+    private String name;
+    private String dept;
+    private int supervisor_id;
 
     public Student(String name, String dept, int sid){
         this.name=name;

@@ -69,7 +69,8 @@ public class StudentGUI extends JFrame {
                     break;
                 case "edit":
                     if (checkField()>=0) {
-                        Student s = new Student(Integer.parseInt(id.getText()));
+                        Student s = new Student(Integer.parseInt(id.getText()), name.getText()
+                                , dept.getText(), Integer.parseInt(profId.getText()));
                         if(!studentDAO.edit(s))
                             JOptionPane.showMessageDialog(this, "Not Found!");
                         table.setModel(studentDAO.getAllAsModel());
@@ -109,7 +110,6 @@ public class StudentGUI extends JFrame {
 
     public void selectionChanged(ListSelectionEvent e) {
         if (table.getSelectedRow() >= 0) {
-            lastSelectedRow = table.getSelectedRow();
             id.setText(String.valueOf(table.getValueAt(table.getSelectedRow(), 0)));
             name.setText(String.valueOf(table.getValueAt(table.getSelectedRow(), 1)));
             dept.setText(String.valueOf(table.getValueAt(table.getSelectedRow(), 2)));
@@ -219,7 +219,6 @@ public class StudentGUI extends JFrame {
     private JButton addButton;
     private ListSelectionModel select;
     private DefaultTableModel model;
-    private int lastSelectedRow;
 
 
     // JFormDesigner - End of variables declaration  //GEN-END:variables

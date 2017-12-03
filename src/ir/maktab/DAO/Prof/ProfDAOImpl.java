@@ -27,7 +27,7 @@ public class ProfDAOImpl extends Manager implements ProfDAO {
         if (p.getId() == null)
             sql = "INSERT INTO " + TABLE_NAME + " (name , address) VALUES ('" + p.getName() + "', '" + p.getAddress() + "' )";
         else
-            sql = "INSERT INTO " + TABLE_NAME + "values ('" + p.getId() + "','" + p.getName() + "','" + p.getAddress() + "')";
+            sql = "INSERT INTO " + TABLE_NAME + " values ('" + p.getId() + "','" + p.getName() + "','" + p.getAddress() + "')";
         stmt.executeUpdate(sql);
         finalize(stmt, conn);
 
@@ -98,7 +98,7 @@ public class ProfDAOImpl extends Manager implements ProfDAO {
 
         DefaultTableModel model = new DefaultTableModel(new String[]{"Id", "Name", "Address"}, 0);
         if (rs.next()) {
-            model.addRow(new Object[]{p.getId(), p.getName(), p.getAddress()});
+            model.addRow(new Object[]{rs.getInt("id"), rs.getString("name"), rs.getString("address")});
         }
         finalize(rs, stmt, conn);
         return model;

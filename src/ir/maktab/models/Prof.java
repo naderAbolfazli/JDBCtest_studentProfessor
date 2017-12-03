@@ -4,20 +4,25 @@ package ir.maktab.models;
  * Created by nader on 11/18/2017.
  */
 public class Prof {
-    Integer id;
-    String name;
-    String address;
+    private Integer id;
+    private String name;
+    private String address;
 
-    public Prof(String name, String address){
-        this.name= name;
-        this.address= address;
+    public Prof(String name, String address) {
+        this.name = name;
+        this.address = address;
     }
 
-    public Prof(Integer id, String name, String address){
+    public Prof(Integer id, String name, String address) {
         this.id = id;
-        this.name= name;
-        this.address= address;
+        this.name = name;
+        this.address = address;
     }
+
+    public Prof(int id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

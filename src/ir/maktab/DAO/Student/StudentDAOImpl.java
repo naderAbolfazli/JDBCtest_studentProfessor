@@ -108,11 +108,10 @@ public class StudentDAOImpl extends Manager implements StudentDAO {
 
         DefaultTableModel model = new DefaultTableModel(new String[]{"Id", "Name", "Dept", "prof ID"}, 0);
         if (rs.next()) {
-            model.addRow(new Object[]{s.getId(), s.getName(), s.getDept(), s.getSupervisor_id()});
-            return model;
+            model.addRow(new Object[]{s.getId(), rs.getString("name"), rs.getString("dept"), rs.getString("supervisor_id")});
         }
         finalize(rs, stmt, conn);
-        return null;
+        return model;
 
     }
 
